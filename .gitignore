@@ -11,6 +11,7 @@ locale/
 media/
 static_root/
 
+
 # IDEs and editors
 .idea/
 .vscode/
