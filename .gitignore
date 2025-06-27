@@ -8,7 +8,6 @@ __pycache__/
 *.pot
 *.mo
 locale/
-media/
 static_root/
 
 
