@@ -1,0 +1,28 @@
+{% extends 'blogs/base.html' %}
+{% block title %}Создание блога{%endblock%}
+{%block content%}
+{% include 'blogs/header.html' %}
+
+<div class="container-fluid centered">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+           <form class="row" method="post" enctype="multipart/form-data">
+              <div class="card">
+                  <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                      {% if object %}
+                      Сохранить
+                      {% else %}
+                      Создать
+                      {% endif %}
+                  </button>
+                  <a href="{% url 'blog:blog_list' %}" class="btn btn-primary">Отмена</a>
+              </div>
+           </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
