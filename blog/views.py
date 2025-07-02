@@ -29,7 +29,7 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     model = Blog
     template_name = 'blogs/blog_form.html'
-    fields = ('heading', 'content', 'image')
+    fields = ('heading', 'content', 'image', 'is_published')
     success_url = reverse_lazy('blog:blog_list')
 
 

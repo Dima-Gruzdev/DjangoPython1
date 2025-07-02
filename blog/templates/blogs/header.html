@@ -2,9 +2,10 @@
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Меню</h5>
     <nav class="ms-5">
-        <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Главная</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_create' %}">Создать блог</a>
+      <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_list' %}">Каталог</a>
+      <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+      <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Блоговые записи</a>
+      <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_create' %}">Создать блог</a>
     </nav>
 
   </div>
@@ -16,6 +17,8 @@
     <h1>Создание блога</h1>
     {% elif request.resolver_match.url_name == 'blog_delete' %}
     <h1>Удаление</h1>
+    {% elif request.resolver_match.url_name == 'blog_detail' %}
+    <h1>Добро пожаловать на страницу описание</h1>
     {% else %}
     <h1>Страничка для редактирования</h1>
     {% endif %}
