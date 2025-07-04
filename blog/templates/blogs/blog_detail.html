@@ -1,0 +1,21 @@
+{% extends 'blogs/base.html' %}
+{% block title %}Создание блога{%endblock%}
+{%block content%}
+{% include 'blogs/header.html' %}
+
+<div class="container mt-5">
+    <div class="product-card">
+        <h1 class="product-title mb-4">Описание Блога</h1>
+        <p><strong>Название:</strong> {{ blogs.heading }}</p>
+        <p><strong>Описание:</strong> {{ blogs.content }}</p>
+        {% if blogs.image %}
+            <img src="{{ blogs.image.url }}" alt="{{ blogs.heading }}" class="img-fluid rounded" style="max-height: 400px;">
+        {% else %}
+            <p>Изображение не загружено</p>
+        {% endif %}
+        <p><strong>Просмотры:</strong> {{ blogs.number_of_views }}</p>
+        <p class="product-meta"><strong>Дата публикации:</strong> {{ blogs.created_at|date:"d M Y" }}</p>
+        <a href="{% url 'blog:blog_list' %}" class="btn btn-secondary">← Назад на главную</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,28 +1,25 @@
-{% extends 'base.html' %}
+{% extends 'products/base.html' %}
 
 {% block title %}Описание продукта{%endblock%}
 
 {%block content%}
-{% include 'header.html' %}
+{% include 'products/header.html' %}
 <div class="container mt-5">
     <div class="product-card">
         <h1 class="product-title mb-4">Описание продукта</h1>
-        <p><strong>Название:</strong> {{ product.name }}</p>
-        <p><strong>Описание:</strong> {{ product.description }}</p>
-        <p><strong>Категория:</strong> {{ product.category_product }}</p>
-        <p><strong>Цена:</strong> {{ product.price_to_buy }}</p>
-        {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded" style="max-height: 400px;">
+        <p><strong>Название:</strong> {{ object.name }}</p>
+        <p><strong>Описание:</strong> {{ object.description }}</p>
+        <p><strong>Категория:</strong> {{ object.category_product }}</p>
+        <p><strong>Цена:</strong> {{ object.price_to_buy }}</p>
+        {% if object.image %}
+            <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-fluid rounded" style="max-height: 400px;">
         {% else %}
             <p>Изображение не загружено</p>
         {% endif %}
-        <p class="product-meta"><strong>Дата публикации:</strong> {{ product.created_at|date:"d M Y" }}</p>
-        <a href="{% url 'catalog:home' %}" class="btn btn-secondary">← Назад в каталог</a>
+        <p class="product-meta"><strong>Дата публикации:</strong> {{ object.created_at|date:"d M Y" }}</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">← Назад в каталог</a>
     </div>
 </div>
-
-
-
 {% endblock %}
 
 <!--<!DOCTYPE html>-->
