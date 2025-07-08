@@ -3,14 +3,25 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Меню</h5>
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_list' %}">Каталог</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Блоговые записи</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_create' %}">Создать блог</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Создать продукт</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
     </nav>
 
   </div>
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1>Продукты</h1>
+    {% if request.resolver_match.url_name == 'product_list' %}
+    <h1>Главная страничка</h1>
     <p>Добро пожаловать на сайт</p>
+    {% elif request.resolver_match.url_name == 'product_create' %}
+    <h1>Создание продукта</h1>
+    {% elif request.resolver_match.url_name == 'product_delete' %}
+    <h1>Удаление</h1>
+    {% elif request.resolver_match.url_name == 'product_detail' %}
+    <h1>Добро пожаловать на страницу описание</h1>
+    {% else %}
+    <h1>Страничка для редактирования</h1>
+    {% endif %}
   </div>
 </header>

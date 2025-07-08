@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from blog.forms import BlogForm
 from django.urls import reverse_lazy, reverse
 from blog.models import Blog
 from django.views.generic import ListView, DetailView
@@ -29,14 +29,14 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     model = Blog
     template_name = 'blogs/blog_form.html'
-    fields = ('heading', 'content', 'image', 'is_published')
+    form_class = BlogForm
     success_url = reverse_lazy('blog:blog_list')
 
 
 class BlogUpdateView(UpdateView):
     model = Blog
     template_name = 'blogs/blog_form.html'
-    fields = ('heading', 'content', 'image')
+    form_class = BlogForm
     success_url = reverse_lazy('blog:blog_list')
 
     def get_success_url(self):

@@ -1,0 +1,29 @@
+{% extends 'products/base.html' %}
+{% block title %}Создание продукта{%endblock%}
+{%block content%}
+{% include 'products/header.html' %}
+
+<div class="container-fluid centered">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+           <form class="row" method="post" enctype="multipart/form-data">
+              <div class="card">
+                  <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {{ form.as_p }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                      {% if object %}
+                      Сохранить
+                      {% else %}
+                      Создать
+                      {% endif %}
+                  </button>
+                  <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Отмена</a>
+              </div>
+           </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
