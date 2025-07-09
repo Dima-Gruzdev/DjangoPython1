@@ -48,8 +48,8 @@ class ProductForm(forms.ModelForm):
         if description and any(word.lower() in description.lower() for word in FORBIDDEN_WORDS):
             raise forms.ValidationError("Описание содержит запрещённые слова.")
 
-    def clean_price(self):
-        price = self.cleaned_data.get('price')
+    def clean_price_to_buy(self):
+        price = self.cleaned_data.get('price_to_buy')
         if price <= 0:
             raise forms.ValidationError("Цена должна быть больше нуля.")
         return price
@@ -57,11 +57,10 @@ class ProductForm(forms.ModelForm):
     def clean_image(self):
         image = self.cleaned_data.get('image')
 
-        if image:
-            valid_formats = ['image/jpeg', 'image/png']
-            if image.content_type not in valid_formats:
-                raise ValidationError('Формат файла должен быть JPEG или PNG.')
-            max_size = 5 * 1024 * 1024
-            if image.size > max_size:
+        mime = image.content_type
+        if mime not in ['image/jpeg', 'image/png']:
+            raise ValidationError('Формат файла должен быть JPEG или PNG.')
+        max_size = 5 * 1024 * 1024
+        if image.size > max_size:
                 raise ValidationError('Размер файла не должен превышать 5 МБ.')
         return image
