@@ -29,6 +29,10 @@
     <h1>Добро пожаловать на страницу описание</h1>
     {% elif request.resolver_match.url_name == 'contacts' %}
     <h1>Добро пожаловать на страницу Контактов</h1>
+    {% elif request.resolver_match.url_name == 'register' %}
+    <h1>Добро пожаловать на страницу Регистрации</h1>
+    {% elif request.resolver_match.url_name == 'login' %}
+    <h1>Добро пожаловать на страницу Входа</h1>
     {% else %}
     <h1>Страничка для редактирования</h1>
     {% endif %}
