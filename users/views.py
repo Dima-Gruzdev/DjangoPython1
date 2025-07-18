@@ -1,5 +1,4 @@
 from django.core.mail import send_mail
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -22,7 +21,3 @@ class RegisterView(CreateView):
         from_email = 'nubile4446@mail.ru'
         recipient_list = [user_email]
         send_mail(subject, message, from_email, recipient_list)
-
-
-def home_view(request):
-    return render(request, 'home.html')
