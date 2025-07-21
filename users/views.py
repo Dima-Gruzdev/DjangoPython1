@@ -1,8 +1,9 @@
+from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, CustomLoginForm
 
 
 class RegisterView(CreateView):
@@ -21,3 +22,8 @@ class RegisterView(CreateView):
         from_email = 'nubile4446@mail.ru'
         recipient_list = [user_email]
         send_mail(subject, message, from_email, recipient_list)
+
+
+class CustomLoginView(LoginView):
+    authentication_form = CustomLoginForm
+    template_name = 'users/login.html'

@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from users.models import User
 
@@ -44,3 +44,14 @@ class UserRegisterForm(UserCreationForm):
         if phone_number and not phone_number.isdigit():
             raise forms.ValidationError('Номер телефона должен состоять только из цифр.')
         return phone_number
+
+
+class CustomLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control',
+        })
