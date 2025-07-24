@@ -22,13 +22,16 @@
                         <a href="{% url 'catalog:product_detail' product.id %}" class="btn btn-primary">Подробнее</a>
                         {% if user.is_authenticated %}
                             {% if user == product.owner %}
-                                <a href="{% url 'product_update' product.pk %}" class="btn btn-warning">Редактировать</a>
+                                <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Редактировать</a>
+                                <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
+                            {% for group in user.groups.all %}
+                                {% if group.name == "Модератор продуктов" %}
                                 <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
-                            {% elif user.has_perm:'products.can_unpublish_product' %}
-                                <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
-                                    {% if product.is_published %}
-                                    <a href="{% url 'unpublish_product' product.pk %}" class="btn btn-secondary">Снять с публикации</a>
-                                    {% endif %}
+                                {% if product.is_published %}
+                                <a href="{% url 'unpublish_product' product.pk %}" class="btn btn-primary">Снять с публикации</a>
+                                {% endif %}
+                                {% endif %}
+                            {% endfor %}
                             {% endif %}
                         {% else %}
                         {% endif %}
