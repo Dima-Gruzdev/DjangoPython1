@@ -57,7 +57,7 @@ class ProductDeleteView(DeleteView):
     def dispatch(self, request, *args, **kwargs):
         product = self.get_object()
         user = request.user
-        if product.owner != user and not user.user.has_perm('products.can_unpublish_product'):
+        if product.owner != user and not user.user.has_perm('catalog.delete_product'):
             return HttpResponseForbidden("Удалить продукт могут только владелец или модератор.")
         return super().dispatch(request, *args, **kwargs)
 
@@ -67,9 +67,9 @@ class ContactsView(TemplateView):
 
 
 class UnpublishProductView(LoginRequiredMixin, View):
-    def post(self, request, product_id):
-        product = get_object_or_404(Product, id=product_id)
-        if not request.user.has_perm('products.can_unpublish_product'):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        if not request.user.has_perm('catalog.can_unpublish_product'):
             return HttpResponseForbidden("У вас нет прав на отмену публикации.")
         product.is_published = False
         product.save()
