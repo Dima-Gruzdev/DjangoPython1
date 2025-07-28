@@ -1,3 +1,5 @@
+import os
+
 from django import forms
 from catalog.models import Product
 from django.core.exceptions import ValidationError
@@ -12,7 +14,7 @@ FORBIDDEN_WORDS = {
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name','description', 'image', 'category_product', 'price_to_buy']
+        fields = ['name','description', 'image', 'category_product', 'price_to_buy', 'is_published']
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -56,11 +58,16 @@ class ProductForm(forms.ModelForm):
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
-
-        mime = image.content_type
-        if mime not in ['image/jpeg', 'image/png']:
-            raise ValidationError('Формат файла должен быть JPEG или PNG.')
-        max_size = 5 * 1024 * 1024
-        if image.size > max_size:
+        if image:
+            if hasattr(image, 'content_type'):
+                content_type = image.content_type
+                if content_type not in ['image/jpeg', 'image/png']:
+                    raise ValidationError('Поддерживаемые форматы: JPEG и PNG.')
+            else:
+                ext = os.path.splitext(image.name)[1].lower()
+                if ext not in ['.jpg', '.jpeg', '.png']:
+                    raise ValidationError('Формат файла должен быть JPEG или PNG.')
+            max_size = 5 * 1024 * 1024
+            if image.size > max_size:
                 raise ValidationError('Размер файла не должен превышать 5 МБ.')
         return image

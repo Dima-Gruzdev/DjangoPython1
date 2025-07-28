@@ -74,4 +74,4 @@ class UnpublishProductView(LoginRequiredMixin, View):
         product.is_published = False
         product.save()
         messages.success(request, f'Продукт "{product.name}" снят с публикации.')
-        return redirect('product_list')
+        return redirect('catalog:product_list')
