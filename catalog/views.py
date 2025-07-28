@@ -56,8 +56,7 @@ class ProductDeleteView(DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         product = self.get_object()
-        user = request.user
-        if product.owner != user and not user.user.has_perm('catalog.delete_product'):
+        if product.owner != request.user and not request.user.has_perm('catalog.delete_product'):
             return HttpResponseForbidden("Удалить продукт могут только владелец или модератор.")
         return super().dispatch(request, *args, **kwargs)
 
