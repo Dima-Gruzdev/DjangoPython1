@@ -1,0 +1,30 @@
+{% extends 'products/base.html' %}
+{% block title %}Категория: {{ category_name }}{% endblock %}
+{% block content %}
+{% include 'products/header.html' %}
+    <h2>Категория: {{ category_name }}</h2>
+    {% if products %}
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="Без изображения">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                            <p><strong>{{ product.price_to_buy }} ₽</strong></p>
+                            <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>В этой категории пока нет товаров.</p>
+    {% endif %}
+    <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">← Все товары</a>
+{% endblock %}
