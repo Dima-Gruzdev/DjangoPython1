@@ -3,6 +3,15 @@
 {%block content%}
 {% include 'products/header.html' %}
 
+
+<div class="categories">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Категории</h5>
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Фрукты' %}">Фрукты</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Овощи' %}">Овощи</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Орехи' %}">Орехи</a>
+    </nav>
+</div>
 <div class="container mt-5">
     <h2 class="mb-4">Список продуктов</h2>
     <div class="row">

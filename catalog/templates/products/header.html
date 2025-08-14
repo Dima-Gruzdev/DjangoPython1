@@ -17,7 +17,6 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
         {% endif %}
     </nav>
-
   </div>
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     {% if request.resolver_match.url_name == 'product_list' %}
@@ -35,6 +34,8 @@
     <h1>Добро пожаловать на страницу Регистрации</h1>
     {% elif request.resolver_match.url_name == 'login' %}
     <h1>Добро пожаловать на страницу Входа</h1>
+    {% elif request.resolver_match.url_name == 'products_by_category' %}
+    <h1>Добро пожаловать на страницу Категории</h1>
     {% else %}
     <h1>Страничка для редактирования</h1>
     {% endif %}
