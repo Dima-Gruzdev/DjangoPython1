@@ -1,0 +1,27 @@
+from django.core.cache import cache
+
+from catalog.models import Product, Category
+from config.settings import CACHE_ENABLED
+
+
+def get_product_from_cache():
+    if not CACHE_ENABLED:
+        return Product.objects.all()
+    key = 'products_list'
+    products = cache.get(key)
+    if products is not None:
+        return products
+    products = Product.objects.all()
+    cache.set(key, products)
+    return products
+
+
+def get_products_by_category(category_name):
+    try:
+        category = Category.objects.get(name_cat__iexact=category_name.strip())
+        return Product.objects.filter(
+            category_product=category,
+            is_published=True
+        ).select_related('category_product')
+    except Category.DoesNotExist:
+        return Product.objects.none()

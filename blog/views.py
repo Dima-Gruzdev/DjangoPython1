@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from blog.forms import BlogForm
 from django.urls import reverse_lazy, reverse
@@ -26,14 +27,14 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     template_name = 'blogs/blog_form.html'
     form_class = BlogForm
     success_url = reverse_lazy('blog:blog_list')
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     template_name = 'blogs/blog_form.html'
     form_class = BlogForm

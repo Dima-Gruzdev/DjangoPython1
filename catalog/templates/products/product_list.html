@@ -3,6 +3,15 @@
 {%block content%}
 {% include 'products/header.html' %}
 
+
+<div class="categories">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Категории</h5>
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Фрукты' %}">Фрукты</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Овощи' %}">Овощи</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:products_by_category' 'Орехи' %}">Орехи</a>
+    </nav>
+</div>
 <div class="container mt-5">
     <h2 class="mb-4">Список продуктов</h2>
     <div class="row">
@@ -20,8 +29,21 @@
                             {{ product.description|truncatechars:100 }}
                         </p>
                         <a href="{% url 'catalog:product_detail' product.id %}" class="btn btn-primary">Подробнее</a>
-                        <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Редактировать</a>
-                        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
+                        {% if user.is_authenticated %}
+                            {% if user == product.owner %}
+                                <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Редактировать</a>
+                            {% endif %}
+                            {% if perms.catalog.delete_product or user == product.owner %}
+                                <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
+                            {% endif %}
+                            {% if perms.catalog.can_unpublish_product and product.is_published %}
+                                <form method="post" class="d-inline" action="{% url 'catalog:unpublish_product' product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Снять с публикации</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
